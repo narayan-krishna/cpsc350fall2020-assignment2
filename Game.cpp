@@ -7,6 +7,7 @@
 
 Game::Game(){
   mode = 0;
+  stabilized = 0;
 };
 
 Game::~Game(){
@@ -100,6 +101,8 @@ void Game::populateRandom(int row, int col, double density){
 }
 
 void Game::propogate(){
+  int area = grid->getRows()*grid->getCols();
+
   Grid *temp = new Grid(grid->getRows(), grid->getCols());
   for(int i = 0; i < grid->getRows(); ++i){
     for(int j = 0; j < grid->getCols(); ++j){
@@ -133,8 +136,12 @@ void Game::propogate(){
     }
   }
 
+  int same_cell = 0;
   for(int i = 0; i < temp->getRows(); ++i){
     for(int j = 0; j < temp->getCols(); ++j){
+      if(temp->getCell(i,j).getStatus() == grid->getCell(i,j).getStatus()){
+        same_cell += 1;
+      }
       if(temp->getCell(i,j).getStatus() == false){
         grid->killCell(i,j);
       }else{
@@ -142,10 +149,15 @@ void Game::propogate(){
       }
     }
   }
+
+  if(same_cell == area){
+    stabilized += 1;
+  }
   delete temp;
 }
 
 void Game::printToConsole(){
+  cout << "stabilized = " << stabilized << endl;
   grid->print();
 }
 
@@ -164,6 +176,19 @@ void Game::printToFile(string fileName, int generations){
     propogate();
     updateBoundary();
   }
+}
+
+void Game::pausePrint(){
+  while(stabilized < 3){
+    printToConsole();
+    propogate();
+    updateBoundary();
+    this_thread::sleep_for(chrono::milliseconds(2000));
+  }
+  string exit;
+  cout << "your simulation has been completely stable for 3 generations. enter e to exit: " << endl;
+  cin >> exit;
+  cout << "done" << endl;
 }
 
 void Game::setBoundary(){

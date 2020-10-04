@@ -67,8 +67,8 @@ Cell Grid::getCell(int i, int j){
 
 //prints the grid
 void Grid::print(){
-  for(int i = 0; i < rows; ++i){
-    for(int j = 0; j < cols; ++j){
+  for(int i = 1; i < rows-1; ++i){
+    for(int j = 1; j < cols-1; ++j){
       cout << grid[i][j].toString();
     }
     cout << endl;

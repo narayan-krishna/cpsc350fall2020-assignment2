@@ -6,12 +6,15 @@
 #include <string>
 #include <math.h>
 #include "Grid.h"
+#include <thread>
+#include <chrono>
 using namespace std;
 
 class Game{
  protected:
     Grid *grid;
     int mode;
+    int stabilized;
 
   public:
     Game();
@@ -29,7 +32,7 @@ class Game{
     void setBoundary();
     void updateBoundary();
     void printToFile(string fileName, int generations);
-    // void pausePrint();
+    void pausePrint();
 };
 
 #endif /* GAME_H */
