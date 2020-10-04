@@ -28,6 +28,7 @@ class Game{
     void printToConsole();
     void setBoundary();
     void updateBoundary();
+    void printToFile(string fileName, int generations);
     // void pausePrint();
 };
 

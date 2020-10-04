@@ -149,10 +149,27 @@ void Game::printToConsole(){
   grid->print();
 }
 
+void Game::printToFile(string fileName, int generations){
+  ofstream outFile;
+  outFile.open(fileName);
+  for(int i = 0; i < generations; ++i){
+    outFile << "gen " << i << "\n\n";
+    for(int i = 1; i < grid->getRows()-1; ++i){
+      for(int j = 1; j < grid->getCols()-1; ++j){
+        outFile << grid->getCell(i,j).toString();
+      }
+      outFile << "\n";
+    }
+    outFile << "\n";
+    propogate();
+    updateBoundary();
+  }
+}
+
 void Game::setBoundary(){
 
 }
 
 void Game::updateBoundary(){
-  
+
 }

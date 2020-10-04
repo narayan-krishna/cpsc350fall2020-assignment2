@@ -8,6 +8,8 @@ Simulation::Simulation(){
   inMode = "";
 }
 
+//runs a simulation of game of life, first asking for the type of input,
+//then the type of game, and then the type of output
 int Simulation::run(){
   cout << "to enter a map file, enter 1" << endl;
   cout << "to generate a random assignment, enter 2" << endl;
@@ -74,6 +76,7 @@ int Simulation::run(){
       int generations;
       cout << "enter the number of generations you'd like to print" << endl;
       cin >> generations;
+      game->printToFile(outFile, generations);
     }
     delete game;
   }else if(inMode == "2"){
