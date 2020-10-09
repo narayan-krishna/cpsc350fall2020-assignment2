@@ -37,6 +37,40 @@ class ClassicGame:public Game{
     void updateBoundary(){
 
     }
+
+    //pause print method which incorporates the classic grid boundary function
+    //waits 1 second before printing another generation
+    void pausePrint(){
+      while(stabilized < 3){
+        printToConsole();
+        propogate();
+        updateBoundary();
+        this_thread::sleep_for(chrono::milliseconds(1000));
+      }
+      string exit;
+      cout << "your simulation has been completely stable for 3 generations. enter e to exit: " << endl;
+      cin >> exit;
+      cout << "done" << endl;
+    }
+
+    //repeatedly prints propogations to a file with the neccesary mode
+    //specific boundary updates
+    void printToFile(string fileName, int generations){
+      ofstream outFile;
+      outFile.open(fileName);
+      for(int i = 0; i < generations; ++i){
+        outFile << "gen " << i+1 << "\n\n";
+        for(int i = 1; i < grid->getRows()-1; ++i){
+          for(int j = 1; j < grid->getCols()-1; ++j){
+            outFile << grid->getCell(i,j).toString();
+          }
+          outFile << "\n";
+        }
+        outFile << "\n";
+        propogate();
+        updateBoundary();
+      }
+    }
 };
 
 #endif /* CLASSICGAME_CPP */

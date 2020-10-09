@@ -9,6 +9,7 @@ class Simulation{
     float inDensity;
     string inChoice;
     string inMode;
+    string outChoice;
 
   public:
     Simulation();

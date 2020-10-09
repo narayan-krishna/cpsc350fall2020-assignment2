@@ -7,14 +7,22 @@ Simulation::Simulation(){
   inDensity = 0;
   inChoice = "";
   inMode = "";
+  outChoice = "";
 }
 
 //runs a simulation of game of life, first asking for the type of input,
 //then the type of game, and then the type of output
 int Simulation::run(){
+  //taking in input choice, and choices for those input choices
   cout << "to enter a map file, enter 1" << endl;
   cout << "to generate a random assignment, enter 2" << endl;
   cin >> inChoice;
+  while(inChoice != "1" && inChoice != "2"){
+    cout << "please enter a valid choice" << endl;
+    cout << "to enter a map file, enter 1" << endl;
+    cout << "to generate a random assignment, enter 2" << endl;
+    cin >> inChoice;
+  }
   if(inChoice == "1"){
     cout << "enter the file name" << endl;
     cin >> inFile;
@@ -37,6 +45,26 @@ int Simulation::run(){
   cout << "donut mode - 2" << endl;
   cout << "mirror mode - 3" << endl;
   cin >> inMode;
+  while(inMode != "1" && inMode != "2" && inMode != "3"){
+    cout << "please enter a valid choice" << endl;
+    cout << "classic mode - 1" << endl;
+    cout << "donut mode - 2" << endl;
+    cout << "mirror mode - 3" << endl;
+    cin >> inChoice;
+  }
+  
+  cout << "enter the number corresponding to your choice of output: " << endl;
+  cout << "continuous printing with brief pauses - 1" << endl;
+  cout << "press enter key to display next generation - 2" << endl;
+  cout << "output to a file - 3" << endl;
+  cin >> outChoice;
+  while(outChoice != "1" && outChoice != "2" && outChoice != "3"){
+    cout << "please enter a valid choice" << endl;
+    cout << "continuous printing with brief pauses - 1" << endl;
+    cout << "press enter key to display next generation - 2" << endl;
+    cout << "output to a file - 3" << endl;
+    cin >> outChoice;
+  }
 
   //CLASSIC GAME
   if(inMode == "1"){
@@ -53,6 +81,7 @@ int Simulation::run(){
   return 0;
 }
 
+//runs a classic game
 int Simulation::runClassic(){
   ClassicGame *game = new ClassicGame();
   if(inChoice == "1"){
@@ -61,12 +90,6 @@ int Simulation::runClassic(){
     game->populateRandom(row, col, inDensity);
   }
   game->setBoundary();
-  string outChoice;
-  cout << "enter the number corresponding to your choice of output: " << endl;
-  cout << "continuous printing with brief pauses - 1" << endl;
-  cout << "press enter key to display next generation - 2" << endl;
-  cout << "output to a file - 3" << endl;
-  cin >> outChoice;
   if(outChoice == "1"){
     game->pausePrint();
     return 0;
@@ -96,6 +119,7 @@ int Simulation::runClassic(){
   delete game;
 }
 
+//runs a donut game
 int Simulation::runDonut(){
   DonutGame *game = new DonutGame();
   if(inChoice == "1"){
@@ -105,12 +129,6 @@ int Simulation::runDonut(){
   }
   game->setBoundary();
   game->updateBoundary();
-  string outChoice;
-  cout << "enter the number corresponding to your choice of output: " << endl;
-  cout << "continuous printing with brief pauses - 1" << endl;
-  cout << "press enter key to display next generation - 2" << endl;
-  cout << "output to a file - 3" << endl;
-  cin >> outChoice;
   if(outChoice == "1"){
     game->pausePrint();
     return 0;
@@ -140,6 +158,7 @@ int Simulation::runDonut(){
   delete game;
 }
 
+//runs a mirror game
 int Simulation::runMirror(){
   MirrorGame *game = new MirrorGame();
   if(inChoice == "1"){
@@ -149,13 +168,6 @@ int Simulation::runMirror(){
   }
   game->setBoundary();
   game->updateBoundary();
-  string outChoice;
-  cout << endl;
-  cout << "enter the number corresponding to your choice of output: " << endl;
-  cout << "continuous printing with brief pauses - 1" << endl;
-  cout << "press enter key to display next generation - 2" << endl;
-  cout << "output to a file - 3" << endl;
-  cin >> outChoice;
   if(outChoice == "1"){
     game->pausePrint();
     return 0;

@@ -43,30 +43,30 @@ class DonutGame:public Game{
 
       //corners
       if(grid->getCell(1,1).getStatus() == true){
-        grid->animateCell(0,0);
-      }else{
-        grid->killCell(0,0);
-      }
-
-      if(grid->getCell(rows - 2,1).getStatus() == true){
-        grid->animateCell(rows - 1 ,0);
-      }else{
-        grid->killCell(rows - 1,0);
-      }
-
-      if(grid->getCell(rows - 2, cols - 2).getStatus() == true){
         grid->animateCell(rows - 1 , cols - 1);
       }else{
         grid->killCell(rows - 1, cols - 1);
       }
 
-      if(grid->getCell(1, cols - 2).getStatus() == true){
+      if(grid->getCell(rows - 2,1).getStatus() == true){
         grid->animateCell(0 , cols - 1);
       }else{
         grid->killCell(0, cols - 1);
       }
 
-      //top row and bottom row
+      if(grid->getCell(rows - 2, cols - 2).getStatus() == true){
+        grid->animateCell(0,0);
+      }else{
+        grid->killCell(0,0);
+      }
+
+      if(grid->getCell(1, cols - 2).getStatus() == true){
+        grid->animateCell(rows - 1 ,0);
+      }else{
+        grid->killCell(rows - 1,0);
+      }
+
+      //top row
       for(int i = 1; i < cols - 1; ++i)
       {
         if(grid->getCell(1, i).getStatus() == true){
@@ -104,6 +104,40 @@ class DonutGame:public Game{
         }else{
           grid->killCell(i, 0);
         }
+      }
+    }
+
+    //pause print method which incorporates the donut  grid boundary function
+    //waits 1 second before printing another generation
+    void pausePrint(){
+      while(stabilized < 3){
+        printToConsole();
+        propogate();
+        updateBoundary();
+        this_thread::sleep_for(chrono::milliseconds(1000));
+      }
+      string exit;
+      cout << "your simulation has been completely stable for 3 generations. enter e to exit: " << endl;
+      cin >> exit;
+      cout << "done" << endl;
+    }
+
+    //repeatedly prints propogations to a file with the neccesary mode
+    //specific boundary updates
+    void printToFile(string fileName, int generations){
+      ofstream outFile;
+      outFile.open(fileName);
+      for(int i = 0; i < generations; ++i){
+        outFile << "gen " << i + 1 << "\n\n";
+        for(int i = 1; i < grid->getRows()-1; ++i){
+          for(int j = 1; j < grid->getCols()-1; ++j){
+            outFile << grid->getCell(i,j).toString();
+          }
+          outFile << "\n";
+        }
+        outFile << "\n";
+        propogate();
+        updateBoundary();
       }
     }
 };
