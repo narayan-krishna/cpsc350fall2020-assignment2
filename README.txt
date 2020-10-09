@@ -16,13 +16,15 @@ DonutGame.cpp
 MirrorGame.cpp
 Simulation.h
 Simulation.cpp
-testfile.txt (a preset text file)
+testfile.txt (the test text file given to us by professor german,
+can be used for testing purposes)
 main.cpp
 Makefile
 core
 
 Errors/Limitations:
-Entering a file which can't be found simply returns a 0
+Couldn't figure out how to know if a file didn't exist when the reader
+looks for it. 
 
 Running the assignment:
 *in command line*

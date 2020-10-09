@@ -28,12 +28,37 @@ int Simulation::run(){
     cin >> inFile;
     // game->readInputFile(inFile);
   }else if(inChoice == "2"){
+    cout << "enter numberical values only." << endl << endl;
     cout << "enter number of rows" << endl;
-    cin >> row;
+    string tempRow;
+    cin >> tempRow;
+    while(!checkForInt(tempRow)){
+      cout << "enter a valid numerical row count" << endl;
+      cin >> tempRow;
+    }
+    row = stoi(tempRow);
+
     cout << "enter number of columns" << endl;
-    cin >> col;
-    cout << "enter density of population to be generated" << endl;
-    cin >> inDensity;
+    string tempCol;
+    cin >> tempCol;
+    while(!checkForInt(tempCol)){
+      cout << "enter a valid numerical col count" << endl;
+      cin >> tempCol;
+    }
+    col = stoi(tempCol);
+
+    cout << "enter density of population to be generated (from 0 to 1)" << endl;
+    string tempDens;
+    cin >> tempDens;
+    while(!checkForInt(tempDens)){
+      cout << "enter a valid numerical density" << endl;
+      cin >> tempDens;
+    }
+    inDensity = stof(tempDens);
+    while(inDensity > 1 || inDensity < 0){
+      cout << "invalid density entered. enter a density as a decimal between 0 and 1" << endl;
+      cin >> inDensity;
+    }
     // game->populateRandom(row, col, inDensity);
   }else{
     cout << "invalid" << endl;
@@ -52,7 +77,7 @@ int Simulation::run(){
     cout << "mirror mode - 3" << endl;
     cin >> inChoice;
   }
-  
+
   cout << "enter the number corresponding to your choice of output: " << endl;
   cout << "continuous printing with brief pauses - 1" << endl;
   cout << "press enter key to display next generation - 2" << endl;
@@ -195,4 +220,15 @@ int Simulation::runMirror(){
     game->printToFile(outFile, generations);
   }
   delete game;
+}
+
+bool Simulation::checkForInt(string input){
+  bool done = false;
+  string numbers = "1234567890.";
+  for(int i = 0; i < input.length(); ++i){
+    if(numbers.find(input.at(i)) < 20){
+      done = true;
+    }
+  }
+  return done;
 }

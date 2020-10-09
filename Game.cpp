@@ -117,7 +117,7 @@ int Game::countNeighbors(int i, int j){
   return neighborCount;
 }
 
-
+//randomly populate the grid given a certain density
 void Game::populateRandom(int row, int col, double density){
   grid = new Grid(row, col);
   for(int i = 0; i < row; ++i){
